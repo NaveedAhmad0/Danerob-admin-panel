@@ -18,9 +18,9 @@ import Footer from "examples/Footer";
 // import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
 
 // Overview page components
-import Header from "layouts/tables/AddSaleComponent/components/Header/index";
+import Header from "layouts/tables/AddUserComponent/components/Header/index";
 // import AddSales from "layouts/AddSale/notifications/index";
-import AddUser from "layouts/tables/AddSaleComponent/salesForm/index";
+import AddUser from "layouts/tables/AddUserComponent/userForm/index";
 
 // Data
 // import profilesListData from "layouts/profile/data/profilesListData";

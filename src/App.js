@@ -35,7 +35,7 @@ import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "co
 // Images
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
-import AddUser from "./layouts/tables/AddSaleComponent/index";
+import AddUser from "./layouts/tables/AddUserComponent/index";
 import AddSale from "./layouts/AddSale/notifications/index";
 
 export default function App() {
