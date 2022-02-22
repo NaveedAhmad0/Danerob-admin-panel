@@ -12,11 +12,11 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-import billingData from "layouts/ManageSales/data/billingData";
+import userData from "layouts/ManageSales/data/userData";
 import MDButton from "components/MDButton";
 
 function Tables() {
-  const { columns, rows } = billingData();
+  const { columns, rows } = userData();
 
   return (
     <DashboardLayout>
