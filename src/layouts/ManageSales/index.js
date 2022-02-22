@@ -12,7 +12,7 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import DataTable from "examples/Tables/DataTable";
 
 // Data
-import userData from "layouts/ManageSales/data/userData";
+import userData from "layouts/ManageSales/data/salesData";
 import MDButton from "components/MDButton";
 
 function Tables() {

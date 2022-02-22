@@ -19,7 +19,7 @@ import Footer from "examples/Footer";
 
 // Overview page components
 import Header from "layouts/AddSale/components/Header";
-import AddSales from "layouts/AddSale/notifications/index";
+import AddSales from "layouts/AddSale/addSaleForm/index";
 
 // Data
 // import profilesListData from "layouts/profile/data/profilesListData";
