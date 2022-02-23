@@ -24,8 +24,8 @@ import Dashboard from "layouts/dashboard";
 import Tables from "layouts/tables";
 import ManageSales from "layouts/ManageSales/index";
 // import Notifications from "layouts/notifications";
-// import Profile from "layouts/profile";
-// import SignIn from "layouts/authentication/sign-in";
+import Profile from "layouts/profile";
+import SignIn from "layouts/authentication/sign-in";
 // import SignUp from "layouts/authentication/sign-up";
 
 // @mui icons
@@ -56,21 +56,29 @@ const routes = [
     route: "/manage-sale",
     component: <ManageSales />,
   },
+  {
+    type: "collapse",
+    name: "Profile",
+    key: "profile",
+    icon: <Icon fontSize="small">person</Icon>,
+    route: "/profile",
+    component: <Profile />,
+  },
+  {
+    type: "collapse",
+    name: "Sign In",
+    key: "sign-in",
+    icon: <Icon fontSize="small">login</Icon>,
+    route: "/authentication/sign-in",
+    component: <SignIn />,
+  },
   // {
   //   type: "collapse",
-  //   name: "Profile",
-  //   key: "profile",
-  //   icon: <Icon fontSize="small">person</Icon>,
-  //   route: "/profile",
-  //   component: <Profile />,
-  // },
-  // {
-  //   type: "collapse",
-  //   name: "Sign In",
-  //   key: "sign-in",
-  //   icon: <Icon fontSize="small">login</Icon>,
-  //   route: "/authentication/sign-in",
-  //   component: <SignIn />,
+  //   name: "Sign Up",
+  //   key: "sign-up",
+  //   icon: <Icon fontSize="small">assignment</Icon>,
+  //   route: "/authentication/sign-up",
+  //   component: <SignUp />,
   // },
 ];
 

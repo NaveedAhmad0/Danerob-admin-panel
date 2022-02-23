@@ -52,6 +52,7 @@ function PlatformSettings() {
                 value={sale}
                 onChange={handleChange}
                 label="Sale"
+                sx={{ textAlign: "left", fontSize: "13px", paddingTop: "5px" }}
               >
                 <MenuItem value="">
                   <em>None</em>

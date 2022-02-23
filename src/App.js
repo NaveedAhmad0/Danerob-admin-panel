@@ -33,10 +33,11 @@ import routes from "routes";
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
 
 // Images
-import brandWhite from "assets/images/logo-ct.png";
-import brandDark from "assets/images/logo-ct-dark.png";
+// import brandWhite from "assets/images/logo-ct.png";
+// import brandDark from "assets/images/logo-ct-dark.png";
 import AddUser from "./layouts/tables/AddUserComponent/index";
 import AddSale from "./layouts/AddSale/addSaleForm/index";
+import ResetPassword from "./layouts/authentication/reset-password/cover/index";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -46,8 +47,8 @@ export default function App() {
     layout,
     openConfigurator,
     sidenavColor,
-    transparentSidenav,
-    whiteSidenav,
+    // transparentSidenav,
+    // whiteSidenav,
     darkMode,
   } = controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
@@ -138,8 +139,8 @@ export default function App() {
         <>
           <Sidenav
             color={sidenavColor}
-            brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-            brandName="Danerob Admin panel"
+            // brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
+            brandName="DanerobNFTs Admin panel"
             routes={routes}
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}
@@ -151,9 +152,10 @@ export default function App() {
       {layout === "vr" && <Configurator />}
       <Routes>
         {getRoutes(routes)}
-        <Route path="*" element={<Navigate to="/dashboard" />} />
+        <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
         <Route path="/add-user" element={<AddUser />} />
         <Route path="/add-sale" element={<AddSale />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
     </ThemeProvider>
   );
