@@ -23,13 +23,21 @@ function PlatformSettings() {
     userAddress: "",
     userTokenAddress: "",
     Sale: "",
-    Amount: "",
   });
 
-  const { userAddress, userTokenAddress, Amount, Sale } = values;
+  const [Amount, setAmount] = useState();
+  const onChange = (e) => {
+    const re = /^[0-9\b]+$/;
+
+    if (e.target.Amount === "" || re.test(e.target.Amount)) {
+      setAmount({ [e.target.name]: e.target.Amount });
+    }
+  };
+
+  const { userAddress, userTokenAddress, Sale } = values;
   const handleChange = (event) => {
     setValues({
-      ...{ userAddress, userTokenAddress, Sale, Amount },
+      ...{ userAddress, userTokenAddress, Sale },
       [event.target.name]: event.target.value,
     });
   };
@@ -37,7 +45,7 @@ function PlatformSettings() {
   // eslint-disable-next-line no-unused-vars
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(values);
+    console.log(values, Amount);
   };
   // const [followsMe, setFollowsMe] = useState(true);
   // const [answersPost, setAnswersPost] = useState(false);
@@ -91,17 +99,16 @@ function PlatformSettings() {
                 fullWidth
                 sx={{ textAlign: "left", fontSize: "13px", paddingTop: "5px" }}
               >
-                <MenuItem value={10}>Seed</MenuItem>
-                <MenuItem value={20}>Private</MenuItem>
-                <MenuItem value={30}>Public</MenuItem>
+                <MenuItem value="seed">Seed</MenuItem>
+                <MenuItem value="private">Private</MenuItem>
+                <MenuItem value="public">Public</MenuItem>
               </Select>
             </FormControl>
           </MDBox>
           <MDBox mb={2}>
             <MDInput
-              onChange={handleChange}
+              onChange={onChange}
               value={Amount}
-              type="text"
               label="Amount"
               variant="standard"
               name="Amount"

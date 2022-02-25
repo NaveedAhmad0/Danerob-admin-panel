@@ -1,5 +1,6 @@
 // @mui material components
 import Grid from "@mui/material/Grid";
+import { useState } from "react";
 // import Divider from "@mui/material/Divider";
 
 // @mui icons
@@ -31,6 +32,22 @@ import Header from "layouts/AddSale/components/Header";
 // import team4 from "assets/images/team-4.jpg";
 
 function Overview() {
+  const [values, setValues] = useState({
+    salePeriod: "",
+    openDate: "",
+    percent: "",
+  });
+  const { salePeriod, openDate, percent } = values;
+  const handleChange = (event) => {
+    setValues({
+      ...{ salePeriod, openDate, percent },
+      [event.target.name]: event.target.value,
+    });
+  };
+  const onSubmit = (e) => {
+    e.preventDefault();
+    console.log(values);
+  };
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -43,16 +60,46 @@ function Overview() {
                 <MDBox pt={4} pb={3} px={8}>
                   <MDBox>
                     <MDBox mb={2}>
-                      <MDInput type="text" label="Sale period" variant="standard" fullWidth />
+                      <MDInput
+                        onChange={(e) => handleChange(e)}
+                        value={salePeriod}
+                        type="text"
+                        label="Sale period"
+                        name="salePeriod"
+                        variant="standard"
+                        fullWidth
+                      />
                     </MDBox>
                     <MDBox mb={2}>
-                      <MDInput type="text" label="Cliff Open Date" variant="standard" fullWidth />
+                      <MDInput
+                        onChange={(e) => handleChange(e)}
+                        value={openDate}
+                        type="text"
+                        name="openDate"
+                        label="Cliff Open Date"
+                        variant="standard"
+                        fullWidth
+                      />
                     </MDBox>
                     <MDBox mb={2}>
-                      <MDInput type="text" label="Percent" variant="standard" fullWidth />
+                      <MDInput
+                        onChange={(e) => handleChange(e)}
+                        value={percent}
+                        type="text"
+                        name="percent"
+                        label="Percent"
+                        variant="standard"
+                        fullWidth
+                      />
                     </MDBox>
                     <MDBox mt={4} mb={1}>
-                      <MDButton href="/manage-sale" variant="gradient" color="info" large>
+                      <MDButton
+                        onClick={(e) => onSubmit(e)}
+                        href="/manage-sale"
+                        variant="gradient"
+                        color="info"
+                        large
+                      >
                         Submit
                       </MDButton>
                     </MDBox>
