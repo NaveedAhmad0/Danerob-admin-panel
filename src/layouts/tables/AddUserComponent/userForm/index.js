@@ -27,12 +27,12 @@ function PlatformSettings() {
 
   const { userAddress, Amount, sale } = values;
   const handleChange = (name) => (event) => {
-    setValues({ ...values, error: false, [name]: event.target.value });
+    setValues({ ...values, [name]: event.target.value });
   };
 
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log(event.target.value);
+    console.log();
     // setValues({ ...values, error: false, loading: true });
   };
   // const [followsMe, setFollowsMe] = useState(true);
