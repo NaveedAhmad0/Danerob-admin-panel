@@ -1,3 +1,5 @@
+/* eslint-disable import/no-duplicates */
+/* eslint-disable consistent-return */
 import { useState } from "react";
 
 // react-router-dom components
@@ -5,14 +7,6 @@ import { Link } from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
-// import Switch from "@mui/material/Switch";
-// import Grid from "@mui/material/Grid";
-// import MuiLink from "@mui/material/Link";
-
-// @mui icons
-// import FacebookIcon from "@mui/icons-material/Facebook";
-// import GitHubIcon from "@mui/icons-material/GitHub";
-// import GoogleIcon from "@mui/icons-material/Google";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
@@ -22,18 +16,14 @@ import MDButton from "components/MDButton";
 
 // Authentication layout components
 import BasicLayout from "layouts/authentication/components/BasicLayout";
-
-// Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
-
+import { signin, authenticate } from "../index";
+// Images
 function Basic() {
-  // const [rememberMe, setRememberMe] = useState(false);
-
-  // const handleSetRememberMe = () => setRememberMe(!rememberMe);
-
   const [values, setValues] = useState({
     email: "",
     password: "",
+    error: "",
   });
   const { email, password } = values;
   const handleChange = (event) => {
@@ -44,9 +34,21 @@ function Basic() {
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(values);
+    setValues({ ...values, error: false, loading: true });
+    signin({ email, password })
+      .then((data) => {
+        if (data && data.error) {
+          setValues({ ...values, error: data.error });
+        } else {
+          authenticate(data, () => {
+            setValues({
+              ...values,
+            });
+          });
+        }
+      })
+      .catch(console.log("signin request failed"));
   };
-
   return (
     <BasicLayout image={bgImage}>
       <Card>
@@ -110,6 +112,9 @@ function Basic() {
                 sign in
               </MDButton>
             </MDBox>
+            {/* {loadingMessage()}
+            {errorMessage()}
+            {performRedirect()} */}
             <MDBox mt={3} mb={1} textAlign="center">
               <MDTypography variant="button" color="text">
                 Forgot password?{" "}

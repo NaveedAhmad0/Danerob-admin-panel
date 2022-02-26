@@ -1,7 +1,7 @@
 import API from "../../backend";
 // eslint-disable-next-line import/prefer-default-export
 export const signin = (user) => {
-  fetch(`${API}/signin`, {
+  fetch(`${API}/admin/login`, {
     method: "POST",
     headers: {
       Accept: "application/json",
