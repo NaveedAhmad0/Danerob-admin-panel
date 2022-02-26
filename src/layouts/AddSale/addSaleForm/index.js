@@ -1,13 +1,15 @@
 // @mui material components
 import Grid from "@mui/material/Grid";
 import { useState } from "react";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 // import Divider from "@mui/material/Divider";
-
+import FormControl from "@mui/material/FormControl";
 // @mui icons
 // import FacebookIcon from "@mui/icons-material/Facebook";
 // import TwitterIcon from "@mui/icons-material/Twitter";
 // import InstagramIcon from "@mui/icons-material/Instagram";
-
+import axios from 'axios';
 import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
@@ -20,7 +22,7 @@ import Footer from "examples/Footer";
 // import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
 // import ProfilesList from "examples/Lists/ProfilesList";
 // import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
-
+import {toast} from 'react-toastify';
 // Overview page components
 import Header from "layouts/AddSale/components/Header";
 // import PlatformSettings from "layouts/profile/components/PlatformSettings";
@@ -32,6 +34,7 @@ import Header from "layouts/AddSale/components/Header";
 // import team4 from "assets/images/team-4.jpg";
 
 function Overview() {
+  const [isLoading,setIsLoading] = useState(false);
   const [values, setValues] = useState({
     salePeriod: "",
     openDate: "",
@@ -46,6 +49,21 @@ function Overview() {
   };
   const onSubmit = (e) => {
     e.preventDefault();
+    let payload = {
+      "saleType": values.salePeriod,
+      "cliffOpenDate": values.openDate,
+      "percentage": parseInt(values.percent)
+    };
+    setIsLoading(true);
+    axios
+      .post(`https://danerob-api.herokuapp.com/sale/create-sale`, payload)
+      .then((res) => {
+        if (res.status == 201) {
+          setIsLoading(false);
+          toast.success("Sale created successfully");
+        }
+        console.log(res.data);
+      }).catch((err) => { });
     console.log(values);
   };
   return (
@@ -60,15 +78,22 @@ function Overview() {
                 <MDBox pt={4} pb={3} px={8}>
                   <MDBox>
                     <MDBox mb={2}>
-                      <MDInput
+                    <FormControl type="text" variant="standard" fullWidth>
+                      <Select
+                        labelId="demo-simple-select-standard-label"
+                        id="demo-simple-select-standard"
+                        label="Sale"
                         onChange={(e) => handleChange(e)}
-                        value={salePeriod}
-                        type="text"
-                        label="Sale period"
+                        value={values.salePeriod}
                         name="salePeriod"
-                        variant="standard"
                         fullWidth
-                      />
+                        sx={{ textAlign: "left", fontSize: "13px", paddingTop: "5px" }}
+                      >
+                        <MenuItem value="seed">Seed</MenuItem>
+                        <MenuItem value="private">Private</MenuItem>
+                        <MenuItem value="public">Public</MenuItem>
+                      </Select>
+                      </FormControl>
                     </MDBox>
                     <MDBox mb={2}>
                       <MDInput

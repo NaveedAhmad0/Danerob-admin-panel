@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 // react-router components
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 // @mui material components
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Icon from "@mui/material/Icon";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 
@@ -38,7 +39,7 @@ import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "co
 import AddUser from "./layouts/tables/AddUserComponent/index";
 import AddSale from "./layouts/AddSale/addSaleForm/index";
 import ResetPassword from "./layouts/authentication/reset-password/cover/index";
-
+import SignIn from "./layouts/authentication/sign-in"
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
   const {
@@ -134,6 +135,7 @@ export default function App() {
 
   return (
     <ThemeProvider theme={darkMode ? themeDark : theme}>
+      <ToastContainer />
       <CssBaseline />
       {layout === "dashboard" && (
         <>
@@ -151,8 +153,8 @@ export default function App() {
       )}
       {layout === "vr" && <Configurator />}
       <Routes>
+      <Route path="/" element={<SignIn />} />
         {getRoutes(routes)}
-        <Route path="*" element={<Navigate to="/authentication/sign-in" />} />
         <Route path="/add-user" element={<AddUser />} />
         <Route path="/add-sale" element={<AddSale />} />
         <Route path="/reset-password" element={<ResetPassword />} />

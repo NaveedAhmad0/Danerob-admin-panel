@@ -15,17 +15,39 @@ import { Card } from "@mui/material";
 import MDButton from "components/MDButton";
 import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
+import axios from "axios";
+import { toast } from "react-toastify";
 // import CoverLayout from "layouts/authentication/components/CoverLayout";
 // import { signin, authenticate } from "../../../authentication/index";
-
+const { useEffect } = React;
 function PlatformSettings() {
+  const [allSales, setAllSales] = useState([]);
+  useEffect(() => {
+    axios.get('https://danerob-api.herokuapp.com/sale/get-all',
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+
+      }
+    ).then(res => {
+      if (res.status == 200) {
+        setAllSales(res.data);
+      }
+    }).catch(err => { });
+
+
+  }, [])
+
+
+
   const [values, setValues] = useState({
     userAddress: "",
     userTokenAddress: "",
     Sale: "",
   });
 
-  const [Amount, setAmount] = useState("");
+  const [Amount, setAmount] = useState();
   const onChange = (e) => {
     const re = /^[0-9\b]+$/;
 
@@ -46,6 +68,30 @@ function PlatformSettings() {
   const onSubmit = (e) => {
     e.preventDefault();
     console.log(values, Amount);
+
+
+    const payload =
+    {
+      "userAddress": values.userAddress,
+      "userTokenAddress": values.userTokenAddress,
+      "saleType": values.Sale,
+      "amount": parseInt(Amount),
+    }
+
+
+    axios.post('https://danerob-api.herokuapp.com/user/create-user', payload,{
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+
+    }).then(res => {
+      if (res.status == 201) {
+        toast.success("User added successfully");
+      }
+      console.log(res.data);
+    }).catch(err => {
+
+    });
   };
   // const [followsMe, setFollowsMe] = useState(true);
   // const [answersPost, setAnswersPost] = useState(false);
@@ -99,15 +145,21 @@ function PlatformSettings() {
                 fullWidth
                 sx={{ textAlign: "left", fontSize: "13px", paddingTop: "5px" }}
               >
-                <MenuItem value="seed">Seed</MenuItem>
-                <MenuItem value="private">Private</MenuItem>
-                <MenuItem value="public">Public</MenuItem>
+
+                {
+                  allSales.map((sale, index) => {
+                    return <MenuItem value={sale.saleType}>{sale.saleType + "-" + sale.percentage.toString()}</MenuItem>
+                  })
+                }
+
+                {/* <MenuItem value="private">Private</MenuItem>
+                <MenuItem value="public">Public</MenuItem> */}
               </Select>
             </FormControl>
           </MDBox>
           <MDBox mb={2}>
             <MDInput
-              onChange={onChange}
+              onChange={(e) => setAmount(e.target.value)}
               value={Amount}
               label="Amount"
               variant="standard"

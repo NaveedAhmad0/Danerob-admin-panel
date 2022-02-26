@@ -5,18 +5,46 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 // import MDAvatar from "components/MDAvatar";
 import MDBadge from "components/MDBadge";
-import { useEffect, useState } from "react";
 import axios from "axios";
+import React from 'react';
 // Images
-
-export default function dataa() {
-  // const [data, setData] = useState([]);
-
+const { useEffect , useState } = React;
+export default function AuthorTadle() {
+  const [data, setData] = useState([]);
   useEffect(() => {
     axios
-      .get("/user/get-all")
+      .get(`https://danerob-api.herokuapp.com/user/get-all`)
       .then((res) => {
-        // setData(res.data);
+        if (res.status === 200) {
+          const sampleTest = [];
+          for (let i = 0; i < res.data.length; i+=1) {
+            sampleTest.push({
+              useraddress: <Author address={res.data[i].userAddress} />,
+              function: <Job title={res.data[i].amount} />,
+              status: (
+                <MDBox ml={-1}>
+                  <MDBadge badgeContent={res.data[i].saleType} color="success" variant="gradient" size="sm" />
+                </MDBox>
+              ),
+              lastDate: (
+                <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+                  {res.data[i].lastClaimedDate || "N/A"}
+                </MDTypography>
+              ),
+              remaining: (
+                <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+                  {res.data[i].remaningClaim || "N/A"}
+                </MDTypography>
+              ),
+              action: (
+                <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+                  Edit
+                </MDTypography>
+              ),
+            });
+          }
+          setData(sampleTest);
+        }
         console.log(res.data);
       })
       .catch((err) => console.log(err));
@@ -50,151 +78,152 @@ export default function dataa() {
       { Header: "action", accessor: "action", align: "center" },
     ],
 
-    rows: [
-      {
-        useraddress: <Author address="0xAddressBhsduY4sdF5kasd" />,
-        function: <Job title="20%" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="Seed" color="success" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        lastDate: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            23/04/18
-          </MDTypography>
-        ),
-        remaining: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            2%
-          </MDTypography>
-        ),
-        action: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Edit
-          </MDTypography>
-        ),
-      },
-      {
-        useraddress: <Author address="0xAddressBhsduY4sdF5kasd" />,
-        function: <Job title="10%" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="Public" color="secondary" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        employed: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            11/01/19
-          </MDTypography>
-        ),
-        remaining: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            2%
-          </MDTypography>
-        ),
-        action: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Edit
-          </MDTypography>
-        ),
-      },
-      {
-        useraddress: <Author address="0xAddressBhsduY4sdF5kasd" />,
-        function: <Job title="10%" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="Private" color="dark" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        employed: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            19/09/17
-          </MDTypography>
-        ),
-        remaining: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            2%
-          </MDTypography>
-        ),
-        action: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Edit
-          </MDTypography>
-        ),
-      },
-      {
-        useraddress: <Author address="0xAddressBhsduY4sdF5kasd" />,
-        function: <Job title="15%" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="Seed" color="success" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        employed: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            24/12/08
-          </MDTypography>
-        ),
-        remaining: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            2%
-          </MDTypography>
-        ),
-        action: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Edit
-          </MDTypography>
-        ),
-      },
-      {
-        useraddress: <Author address="0xAddressBhsduY4sdF5kasd" />,
-        function: <Job title="10%" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="Private" color="dark" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        employed: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            04/10/21
-          </MDTypography>
-        ),
-        remaining: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            2%
-          </MDTypography>
-        ),
-        action: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Edit
-          </MDTypography>
-        ),
-      },
-      {
-        useraddress: <Author address="0xAddressBhsduY4sdF5kasd" />,
-        function: <Job title="5%" />,
-        status: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="Public" color="secondary" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        employed: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            14/09/20
-          </MDTypography>
-        ),
-        remaining: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            2%
-          </MDTypography>
-        ),
-        action: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Edit
-          </MDTypography>
-        ),
-      },
-    ],
+    rows: data,
+    // [
+    //   {
+    //     useraddress: <Author address="0xAddressBhsduY4sdF5kasd" />,
+    //     function: <Job title="20%" />,
+    //     status: (
+    //       <MDBox ml={-1}>
+    //         <MDBadge badgeContent="Seed" color="success" variant="gradient" size="sm" />
+    //       </MDBox>
+    //     ),
+    //     lastDate: (
+    //       <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+    //         23/04/18
+    //       </MDTypography>
+    //     ),
+    //     remaining: (
+    //       <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+    //         2%
+    //       </MDTypography>
+    //     ),
+    //     action: (
+    //       <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+    //         Edit
+    //       </MDTypography>
+    //     ),
+    //   },
+    //   {
+    //     useraddress: <Author address="0xAddressBhsduY4sdF5kasd" />,
+    //     function: <Job title="10%" />,
+    //     status: (
+    //       <MDBox ml={-1}>
+    //         <MDBadge badgeContent="Public" color="secondary" variant="gradient" size="sm" />
+    //       </MDBox>
+    //     ),
+    //     employed: (
+    //       <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+    //         11/01/19
+    //       </MDTypography>
+    //     ),
+    //     remaining: (
+    //       <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+    //         2%
+    //       </MDTypography>
+    //     ),
+    //     action: (
+    //       <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+    //         Edit
+    //       </MDTypography>
+    //     ),
+    //   },
+    //   {
+    //     useraddress: <Author address="0xAddressBhsduY4sdF5kasd" />,
+    //     function: <Job title="10%" />,
+    //     status: (
+    //       <MDBox ml={-1}>
+    //         <MDBadge badgeContent="Private" color="dark" variant="gradient" size="sm" />
+    //       </MDBox>
+    //     ),
+    //     employed: (
+    //       <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+    //         19/09/17
+    //       </MDTypography>
+    //     ),
+    //     remaining: (
+    //       <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+    //         2%
+    //       </MDTypography>
+    //     ),
+    //     action: (
+    //       <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+    //         Edit
+    //       </MDTypography>
+    //     ),
+    //   },
+    //   {
+    //     useraddress: <Author address="0xAddressBhsduY4sdF5kasd" />,
+    //     function: <Job title="15%" />,
+    //     status: (
+    //       <MDBox ml={-1}>
+    //         <MDBadge badgeContent="Seed" color="success" variant="gradient" size="sm" />
+    //       </MDBox>
+    //     ),
+    //     employed: (
+    //       <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+    //         24/12/08
+    //       </MDTypography>
+    //     ),
+    //     remaining: (
+    //       <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+    //         2%
+    //       </MDTypography>
+    //     ),
+    //     action: (
+    //       <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+    //         Edit
+    //       </MDTypography>
+    //     ),
+    //   },
+    //   {
+    //     useraddress: <Author address="0xAddressBhsduY4sdF5kasd" />,
+    //     function: <Job title="10%" />,
+    //     status: (
+    //       <MDBox ml={-1}>
+    //         <MDBadge badgeContent="Private" color="dark" variant="gradient" size="sm" />
+    //       </MDBox>
+    //     ),
+    //     employed: (
+    //       <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+    //         04/10/21
+    //       </MDTypography>
+    //     ),
+    //     remaining: (
+    //       <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+    //         2%
+    //       </MDTypography>
+    //     ),
+    //     action: (
+    //       <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+    //         Edit
+    //       </MDTypography>
+    //     ),
+    //   },
+    //   {
+    //     useraddress: <Author address="0xAddressBhsduY4sdF5kasd" />,
+    //     function: <Job title="5%" />,
+    //     status: (
+    //       <MDBox ml={-1}>
+    //         <MDBadge badgeContent="Public" color="secondary" variant="gradient" size="sm" />
+    //       </MDBox>
+    //     ),
+    //     employed: (
+    //       <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+    //         14/09/20
+    //       </MDTypography>
+    //     ),
+    //     remaining: (
+    //       <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+    //         2%
+    //       </MDTypography>
+    //     ),
+    //     action: (
+    //       <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+    //         Edit
+    //       </MDTypography>
+    //     ),
+    //   },
+    // ],
   };
 }

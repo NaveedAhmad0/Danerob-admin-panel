@@ -8,16 +8,42 @@ import MDBadge from "components/MDBadge";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function dataa() {
-  // const [data, setData] = useState([]);
+export default function Dataa() {
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios("")
+    axios("https://danerob-api.herokuapp.com/sale/get-all",{
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+
+    })
       .then((res) => {
-        setData(res.data);
+        if (res.status == 200) {
+          const sampleTest = [];
+          for (let i = 0; i < res.data.length; i += 1) {
+            sampleTest.push({
+              Sale: (
+                <MDBox ml={-1}>
+                  <MDBadge badgeContent={res.data[i].saleType} color="secondary" variant="gradient" size="sm" />
+                </MDBox>
+              ),
+              function: <Date title={res.data[i].cliffOpenDate} />,
+              status: <Percent title={res.data[i].percentage} />,
+              action: (
+                <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
+                  Edit
+                </MDTypography>
+              ),
+            })
+          }
+          setData(sampleTest);
+        }
+        
       })
       .catch((err) => console.log(err));
   }, []);
+
   const Date = ({ title }) => (
     <MDBox lineHeight={1} textAlign="left">
       <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
@@ -40,91 +66,6 @@ export default function dataa() {
       { Header: "Percent", accessor: "status", align: "left" },
     ],
 
-    rows: [
-      {
-        Sale: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="Public" color="secondary" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        function: <Date title="23/04/18" />,
-        status: <Percent title="20%" />,
-        action: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Edit
-          </MDTypography>
-        ),
-      },
-      {
-        Sale: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="Seed" color="success" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        function: <Date title="23/04/18" />,
-        status: <Percent title="20%" />,
-        action: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Edit
-          </MDTypography>
-        ),
-      },
-      {
-        Sale: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="Private" color="dark" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        function: <Date title="23/04/18" />,
-        status: <Percent title="20%" />,
-        action: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Edit
-          </MDTypography>
-        ),
-      },
-      {
-        Sale: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="Public" color="secondary" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        function: <Date title="23/04/18" />,
-        status: <Percent title="20%" />,
-        action: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Edit
-          </MDTypography>
-        ),
-      },
-      {
-        Sale: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="Seed" color="success" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        function: <Date title="23/04/18" />,
-        status: <Percent title="20%" />,
-        action: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Edit
-          </MDTypography>
-        ),
-      },
-      {
-        Sale: (
-          <MDBox ml={-1}>
-            <MDBadge badgeContent="Public" color="secondary" variant="gradient" size="sm" />
-          </MDBox>
-        ),
-        function: <Date title="23/04/18" />,
-        status: <Percent title="20%" />,
-        action: (
-          <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-            Edit
-          </MDTypography>
-        ),
-      },
-    ],
+    rows: data,
   };
 }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect} from "react";
 
 // react-router-dom components
 import { Link, useNavigate } from "react-router-dom";
@@ -28,6 +28,9 @@ import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
 function Basic() {
   // const [rememberMe, setRememberMe] = useState(false);
+  useEffect(() => {
+    localStorage.clear();
+  },[])
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const logindetails = { email, password };
@@ -53,11 +56,11 @@ function Basic() {
     fetch("https://danerob-api.herokuapp.com/admin/login", requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        if (result.status === 200) {
+       
           localStorage.setItem("token", result?.accessToken);
           navigate("/dashboard");
           console.log(result);
-        }
+     
       })
       .catch((error) => console.log("error", error));
   }
