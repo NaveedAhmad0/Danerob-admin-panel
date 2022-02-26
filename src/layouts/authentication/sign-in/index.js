@@ -28,24 +28,38 @@ import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 
 function Basic() {
   // const [rememberMe, setRememberMe] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const logindetails = { email: email, password: password };
+  let logind;
+  let pass;
+  function handleChange(event) {
+    logind = event.target.value;
+  }
+  function handleChangeone(event) {
+    pass = event.target.value;
+  }
+  function onSubmit() {
+    setEmail(logind);
+    setPassword(pass);
+    console.log(email, password);
+  }
 
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(logindetails),
+  };
+
+  fetch("https://danerob-api.herokuapp.com/admin/login", requestOptions)
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((error) => console.log("error", error));
   // const handleSetRememberMe = () => setRememberMe(!rememberMe);
-
-  const [values, setValues] = useState({
-    email: "",
-    password: "",
-  });
-  const { email, password } = values;
-  const handleChange = (event) => {
-    setValues({
-      ...{ email, password },
-      [event.target.name]: event.target.value,
-    });
-  };
-  const onSubmit = (e) => {
-    e.preventDefault();
-    console.log(values);
-  };
 
   return (
     <BasicLayout image={bgImage}>
@@ -69,7 +83,7 @@ function Basic() {
           <MDBox component="form" role="form">
             <MDBox mb={2}>
               <MDInput
-                onChange={(e) => handleChange(e)}
+                onChange={handleChange}
                 value={email}
                 type="email"
                 name="email"
@@ -79,7 +93,7 @@ function Basic() {
             </MDBox>
             <MDBox mb={2}>
               <MDInput
-                onChange={(e) => handleChange(e)}
+                onChange={handleChangeone}
                 value={password}
                 type="password"
                 label="Password"
@@ -101,7 +115,7 @@ function Basic() {
             </MDBox> */}
             <MDBox mt={4} mb={1}>
               <MDButton
-                onClick={(e) => onSubmit(e)}
+                onClick={onSubmit}
                 href="/dashboard"
                 variant="gradient"
                 color="info"

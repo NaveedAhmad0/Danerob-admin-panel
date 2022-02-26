@@ -1,9 +1,8 @@
 {
-
   "name": "DanerobNFTs",
   "version": "2.1.0",
   "private": true,
-  "proxy":"https://danerob-api.herokuapp.com",
+  "proxy": "https://danerob-api.herokuapp.com",
   "author": "Creative Tim",
   "license": "See license in https://www.creative-tim.com/license",
   "description": "React version of Material Dashboard 2 by Creative Tim",
