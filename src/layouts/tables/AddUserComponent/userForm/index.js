@@ -21,19 +21,31 @@ import MDInput from "components/MDInput";
 function PlatformSettings() {
   const [values, setValues] = useState({
     userAddress: "",
-    Amount: "",
-    sale: "",
+    userTokenAddress: "",
+    Sale: "",
   });
 
-  const { userAddress, Amount, sale } = values;
-  const handleChange = (name) => (event) => {
-    setValues({ ...values, [name]: event.target.value });
+  const [Amount, setAmount] = useState();
+  const onChange = (e) => {
+    const re = /^[0-9\b]+$/;
+
+    if (e.target.Amount === "" || re.test(e.target.Amount)) {
+      setAmount({ [e.target.name]: e.target.Amount });
+    }
   };
 
-  const onSubmit = (event) => {
-    event.preventDefault();
-    console.log();
-    // setValues({ ...values, error: false, loading: true });
+  const { userAddress, userTokenAddress, Sale } = values;
+  const handleChange = (event) => {
+    setValues({
+      ...{ userAddress, userTokenAddress, Sale },
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  // eslint-disable-next-line no-unused-vars
+  const onSubmit = (e) => {
+    e.preventDefault();
+    console.log(values, Amount);
   };
   // const [followsMe, setFollowsMe] = useState(true);
   // const [answersPost, setAnswersPost] = useState(false);
@@ -47,11 +59,23 @@ function PlatformSettings() {
         <MDBox>
           <MDBox mb={2}>
             <MDInput
-              onChange={handleChange("userAddress")}
+              onChange={(e) => handleChange(e)}
               value={userAddress}
               type="text"
               label="User Address"
               variant="standard"
+              name="userAddress"
+              fullWidth
+            />
+          </MDBox>
+          <MDBox mb={2}>
+            <MDInput
+              onChange={(e) => handleChange(e)}
+              value={userTokenAddress}
+              type="text"
+              label="User Token Address"
+              variant="standard"
+              name="userTokenAddress"
               fullWidth
             />
           </MDBox>
@@ -69,32 +93,36 @@ function PlatformSettings() {
                 labelId="demo-simple-select-standard-label"
                 id="demo-simple-select-standard"
                 label="Sale"
-                onChange={handleChange("sale")}
-                value={sale}
+                onChange={(e) => handleChange(e)}
+                value={Sale}
+                name="Sale"
                 fullWidth
                 sx={{ textAlign: "left", fontSize: "13px", paddingTop: "5px" }}
               >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem value={10}>Seed</MenuItem>
-                <MenuItem value={20}>Private</MenuItem>
-                <MenuItem value={30}>Public</MenuItem>
+                <MenuItem value="seed">Seed</MenuItem>
+                <MenuItem value="private">Private</MenuItem>
+                <MenuItem value="public">Public</MenuItem>
               </Select>
             </FormControl>
           </MDBox>
           <MDBox mb={2}>
             <MDInput
-              onChange={handleChange("Amount")}
+              onChange={onChange}
               value={Amount}
-              type="text"
               label="Amount"
               variant="standard"
+              name="Amount"
               fullWidth
             />
           </MDBox>
           <MDBox mt={4} mb={1}>
-            <MDButton href="/tables" variant="gradient" color="info" onClick={onSubmit} large>
+            <MDButton
+              href="/tables"
+              variant="gradient"
+              color="info"
+              onClick={(e) => onSubmit(e)}
+              large
+            >
               Submit
             </MDButton>
           </MDBox>

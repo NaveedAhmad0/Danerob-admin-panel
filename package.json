@@ -1,7 +1,9 @@
 {
+
   "name": "DanerobNFTs",
   "version": "2.1.0",
   "private": true,
+  "proxy":"https://danerob-api.herokuapp.com",
   "author": "Creative Tim",
   "license": "See license in https://www.creative-tim.com/license",
   "description": "React version of Material Dashboard 2 by Creative Tim",
@@ -26,6 +28,7 @@
     "@testing-library/jest-dom": "5.16.2",
     "@testing-library/react": "12.1.2",
     "@testing-library/user-event": "13.5.0",
+    "axios": "^0.26.0",
     "chart.js": "3.4.1",
     "chroma-js": "2.4.2",
     "prop-types": "15.8.1",

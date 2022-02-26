@@ -1,10 +1,23 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/function-component-definition */
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDBadge from "components/MDBadge";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-export default function data() {
+export default function dataa() {
+  // const [data, setData] = useState([]);
+
+  useEffect(() => {
+    axios("")
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
   const Date = ({ title }) => (
     <MDBox lineHeight={1} textAlign="left">
       <MDTypography display="block" variant="caption" color="text" fontWeight="medium">

@@ -1,6 +1,5 @@
 // @mui material components
 import Card from "@mui/material/Card";
-
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
@@ -12,8 +11,25 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 
 // Images
 import bgImage from "assets/images/bg-reset-cover.jpeg";
+import { useState } from "react";
 
 function Cover() {
+  const [values, setValues] = useState({
+    email: "",
+  });
+  const { email } = values;
+  const handleChange = (event) => {
+    setValues({
+      ...{ email },
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  // eslint-disable-next-line no-unused-vars
+  const onSubmit = (e) => {
+    e.preventDefault();
+    console.log(values);
+  };
   return (
     <CoverLayout coverHeight="50vh" image={bgImage}>
       <Card>
@@ -38,10 +54,18 @@ function Cover() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={4}>
-              <MDInput type="email" label="Email" variant="standard" fullWidth />
+              <MDInput
+                onChange={(e) => handleChange(e)}
+                value={email}
+                type="email"
+                name="email"
+                label="Email"
+                variant="standard"
+                fullWidth
+              />
             </MDBox>
             <MDBox mt={6} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
+              <MDButton onClick={(e) => onSubmit(e)} variant="gradient" color="info" fullWidth>
                 reset
               </MDButton>
             </MDBox>
