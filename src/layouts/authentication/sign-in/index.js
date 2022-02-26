@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 // react-router-dom components
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -30,36 +30,37 @@ function Basic() {
   // const [rememberMe, setRememberMe] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const logindetails = { email: email, password: password };
-  let logind;
-  let pass;
+  const logindetails = { email, password };
+  const navigate = useNavigate();
   function handleChange(event) {
-    logind = event.target.value;
+    // logind = event.target.value;
+    setEmail(event.target.value);
   }
   function handleChangeone(event) {
-    pass = event.target.value;
+    setPassword(event.target.value);
   }
-  function onSubmit() {
-    setEmail(logind);
-    setPassword(pass);
+  function onSubmit(event) {
+    event.preventDefault();
     console.log(email, password);
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(logindetails),
+    };
+
+    fetch("https://danerob-api.herokuapp.com/admin/login", requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        if (result.status === 200) {
+          localStorage.setItem("token", result?.accessToken);
+          navigate("/dashboard");
+          console.log(result);
+        }
+      })
+      .catch((error) => console.log("error", error));
   }
-
-  const requestOptions = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(logindetails),
-  };
-
-  fetch("https://danerob-api.herokuapp.com/admin/login", requestOptions)
-    .then((response) => response.json())
-    .then((result) => {
-      console.log(result);
-    })
-    .catch((error) => console.log("error", error));
-  // const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
   return (
     <BasicLayout image={bgImage}>
@@ -83,7 +84,7 @@ function Basic() {
           <MDBox component="form" role="form">
             <MDBox mb={2}>
               <MDInput
-                onChange={handleChange}
+                onChange={(event) => handleChange(event)}
                 value={email}
                 type="email"
                 name="email"
@@ -93,7 +94,7 @@ function Basic() {
             </MDBox>
             <MDBox mb={2}>
               <MDInput
-                onChange={handleChangeone}
+                onChange={(event) => handleChangeone(event)}
                 value={password}
                 type="password"
                 label="Password"
@@ -115,7 +116,7 @@ function Basic() {
             </MDBox> */}
             <MDBox mt={4} mb={1}>
               <MDButton
-                onClick={onSubmit}
+                onClick={(event) => onSubmit(event)}
                 href="/dashboard"
                 variant="gradient"
                 color="info"

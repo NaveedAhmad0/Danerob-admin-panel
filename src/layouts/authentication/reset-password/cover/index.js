@@ -28,7 +28,22 @@ function Cover() {
   // eslint-disable-next-line no-unused-vars
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(values);
+    // console.log(values);
+    console.log(email);
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(email),
+    };
+
+    fetch("https://danerob-api.herokuapp.com/admin/update-password", requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => console.log("error", error));
   };
   return (
     <CoverLayout coverHeight="50vh" image={bgImage}>

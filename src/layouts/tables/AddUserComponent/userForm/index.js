@@ -25,7 +25,7 @@ function PlatformSettings() {
     Sale: "",
   });
 
-  const [Amount, setAmount] = useState();
+  const [Amount, setAmount] = useState("");
   const onChange = (e) => {
     const re = /^[0-9\b]+$/;
 
