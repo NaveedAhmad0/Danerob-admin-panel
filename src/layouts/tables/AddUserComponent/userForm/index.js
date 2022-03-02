@@ -91,7 +91,7 @@ function PlatformSettings() {
       })
       .then((res) => {
 		payload.seed =  res.data.seed;
-		payload.transaction =  res.data.transaction;
+		payload.transaction =  res.data.tx;
 		axios
 		.post("https://danerob-api.herokuapp.com/user/create-user", payload, {
 		  headers: {
