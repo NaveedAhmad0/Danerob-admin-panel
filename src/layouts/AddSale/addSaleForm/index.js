@@ -26,7 +26,12 @@ import { toast } from "react-toastify";
 // Overview page components
 import Header from "layouts/AddSale/components/Header";
 // import PlatformSettings from "layouts/profile/components/PlatformSettings";
-
+// import {
+// 	MuiPickersUtilsProvider,
+// 	KeyboardDatePicker,
+// } from "@material-ui/pickers";
+// import "date-fns";
+// import DateFnsUtils from "@date-io/date-fns";
 // Data
 // import profilesListData from "layouts/profile/data/profilesListData";
 
@@ -104,12 +109,19 @@ function Overview() {
 											<MDInput
 												onChange={(e) => handleChange(e)}
 												value={openDate}
-												type="text"
+												type="datetime-local"
 												name="openDate"
-												label="Cliff Open Date"
+												// label="Cliff Open Date"
 												variant="standard"
 												fullWidth
 											/>
+											{/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
+												<KeyboardDatePicker
+													label="Material Date Picker"
+													value={openDate}
+													onChange={(e) => handleChange(e)}
+												/>
+											</MuiPickersUtilsProvider> */}
 										</MDBox>
 										<MDBox mb={2}>
 											<MDInput
