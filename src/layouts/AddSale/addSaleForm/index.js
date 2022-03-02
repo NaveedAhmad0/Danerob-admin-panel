@@ -55,6 +55,9 @@ function Overview() {
       "percentage": parseInt(values.percent)
     };
     setIsLoading(true);
+
+
+
     axios
       .post(`https://danerob-api.herokuapp.com/sale/create-sale`, payload)
       .then((res) => {
