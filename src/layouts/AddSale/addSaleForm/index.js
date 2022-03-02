@@ -111,7 +111,7 @@ function Overview() {
 												value={openDate}
 												type="datetime-local"
 												name="openDate"
-												label="Cliff Open Date"
+												// label="Cliff Open Date"
 												variant="standard"
 												fullWidth
 											/>
