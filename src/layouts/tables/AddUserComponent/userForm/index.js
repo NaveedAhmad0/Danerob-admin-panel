@@ -70,6 +70,9 @@ function PlatformSettings() {
       userTokenAddress: values.userTokenAddress,
       saleType: allSales[values.Sale].saleType,
       amount: parseInt(Amount),
+	  seed:null,
+	  claimDate:new Date(allSales[values.Sale].cliffOpenDate),
+	  transaction:null
     };
 
 	let scDate = Math.round((new Date(allSales[values.Sale].cliffOpenDate)).getTime() / 1000);
@@ -87,7 +90,8 @@ function PlatformSettings() {
         },
       })
       .then((res) => {
-		payload.userTokenAddress =  res.data.seed;
+		payload.seed =  res.data.seed;
+		payload.transaction =  res.data.transaction;
 		axios
 		.post("https://danerob-api.herokuapp.com/user/create-user", payload, {
 		  headers: {
