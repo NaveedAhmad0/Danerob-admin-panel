@@ -1,3 +1,4 @@
+// export default Overview;
 // @mui material components
 import Grid from "@mui/material/Grid";
 import { useState } from "react";
@@ -5,74 +6,86 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 // import Divider from "@mui/material/Divider";
 import FormControl from "@mui/material/FormControl";
-// @mui icons
-// import FacebookIcon from "@mui/icons-material/Facebook";
-// import TwitterIcon from "@mui/icons-material/Twitter";
-// import InstagramIcon from "@mui/icons-material/Instagram";
+
 import axios from "axios";
 import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import { Card } from "@mui/material";
-import MDTypography from "components/MDTypography";
-
+// import Icon from "@mui/material/Icon";
+import AddIcon from "@mui/icons-material/Add";
+import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import IconButton from "@mui/material/IconButton";
+import AddBoxSharpIcon from "@mui/icons-material/AddBoxSharp";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
-// import ProfileInfoCard from "examples/Cards/InfoCards/ProfileInfoCard";
-// import ProfilesList from "examples/Lists/ProfilesList";
-// import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
+
 import { toast } from "react-toastify";
 // Overview page components
 import Header from "layouts/AddSale/components/Header";
-// import PlatformSettings from "layouts/profile/components/PlatformSettings";
-// import {
-// 	MuiPickersUtilsProvider,
-// 	KeyboardDatePicker,
-// } from "@material-ui/pickers";
-// import "date-fns";
-// import DateFnsUtils from "@date-io/date-fns";
-// Data
-// import profilesListData from "layouts/profile/data/profilesListData";
-
-// Images
-// import team4 from "assets/images/team-4.jpg";
 
 function Overview() {
+	const [formValues, setFormValues] = useState([{ openDate: "", percent: "" }]);
+
+	let handleFormChange = (i, e) => {
+		let newFormValues = [...formValues];
+		newFormValues[i][e.target.name] = e.target.value;
+		setFormValues(newFormValues);
+	};
+
+	let addFormFields = () => {
+		setFormValues([...formValues, { openDate: "", percent: "" }]);
+	};
+
+	let removeFormFields = (i) => {
+		let newFormValues = [...formValues];
+		newFormValues.splice(i, 1);
+		setFormValues(newFormValues);
+	};
+
 	const [isLoading, setIsLoading] = useState(false);
 	const [values, setValues] = useState({
 		salePeriod: "",
-		openDate: "",
-		percent: "",
+		// openDate: "",
+		// percent: "",
 	});
-	const { salePeriod, openDate, percent } = values;
+	const { salePeriod } = values;
 	const handleChange = (event) => {
 		setValues({
-			...{ salePeriod, openDate, percent },
+			...{ salePeriod },
 			[event.target.name]: event.target.value,
 		});
 	};
 	const onSubmit = (e) => {
 		e.preventDefault();
-		let payload = {
-			saleType: values.salePeriod,
-			cliffOpenDate: values.openDate,
-			percentage: parseInt(values.percent),
-		};
-		setIsLoading(true);
 
-		axios
-			.post(`https://danerob-api.herokuapp.com/sale/create-sale`, payload)
-			.then((res) => {
-				if (res.status == 201) {
-					setIsLoading(false);
-					toast.success("Sale created successfully");
-				}
-				console.log(res.data);
-			})
-			.catch((err) => {});
-		console.log(values);
+		setIsLoading(true);
+		for (let i = 0; i <= formValues.length; i++) {
+			// let sale = formValues[i];
+			// sale.salePeriod
+			let payload = {
+				saleType: values.salePeriod,
+				cliffOpenDate: formValues[i].openDate,
+				percentage: parseInt(formValues[i].percent),
+			};
+
+			axios
+				.post(`https://danerob-api.herokuapp.com/sale/create-sale`, payload)
+				.then((res) => {
+					if (res.status == 201) {
+						setIsLoading(false);
+						toast.success("Sale created successfully");
+					}
+					console.log(res.data);
+				})
+				.catch((err) => {});
+			// console.log(values, formValues);
+			console.log(payload);
+		}
 	};
+
 	return (
 		<DashboardLayout>
 			<DashboardNavbar />
@@ -84,38 +97,6 @@ function Overview() {
 							<Card>
 								<MDBox pt={4} pb={3} px={8}>
 									<MDBox>
-										<MDBox mb={2} sx={{ display: "flex" }}>
-											<MDBox sx={{ marginTop: "5px", marginRight: "10px" }}>
-												<MDTypography
-													display="inline"
-													variant="h6"
-													textTransform="capitalize"
-													fontWeight="bold">
-													Number of Rounds :
-												</MDTypography>
-											</MDBox>
-											<MDBox>
-												<MDInput
-													onChange={(e) => handleChange(e)}
-													// value={percent}
-													type="text"
-													name="percent"
-													label="Rounds"
-													// variant="box"
-													size="small"
-												/>
-											</MDBox>
-											<MDBox>
-												<MDButton
-													onClick={(e) => onSubmit(e)}
-													variant="gradient"
-													size="small"
-													color="info"
-													large>
-													ADD
-												</MDButton>
-											</MDBox>
-										</MDBox>
 										<MDBox mb={2}>
 											<FormControl type="text" variant="standard" fullWidth>
 												<Select
@@ -128,7 +109,7 @@ function Overview() {
 													sx={{
 														textAlign: "left",
 														fontSize: "13px",
-														paddingTop: "5px",
+														paddingTmop: "5px",
 													}}>
 													<MenuItem value="seed">Seed</MenuItem>
 													<MenuItem value="private">Private</MenuItem>
@@ -136,34 +117,58 @@ function Overview() {
 												</Select>
 											</FormControl>
 										</MDBox>
-										<MDBox mb={2}>
-											<MDInput
-												onChange={(e) => handleChange(e)}
-												value={openDate}
-												type="datetime-local"
-												name="openDate"
-												// label="Cliff Open Date"
-												variant="standard"
-												fullWidth
-											/>
-											{/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
-												<KeyboardDatePicker
-													label="Material Date Picker"
-													value={openDate}
-													onChange={(e) => handleChange(e)}
-												/>
-											</MuiPickersUtilsProvider> */}
-										</MDBox>
-										<MDBox mb={2}>
-											<MDInput
-												onChange={(e) => handleChange(e)}
-												value={percent}
-												type="text"
-												name="percent"
-												label="Percent"
-												variant="standard"
-												fullWidth
-											/>
+										{formValues.map((e, index) => (
+											<div key={index}>
+												<MDBox mb={2}>
+													<MDInput
+														onChange={(e) => handleFormChange(index, e)}
+														value={formValues.openDate}
+														type="datetime-local"
+														name="openDate"
+														// label="Cliff Open Date"
+														variant="standard"
+														fullWidth
+													/>
+												</MDBox>
+												<MDBox mb={2}>
+													<MDInput
+														onChange={(e) => handleFormChange(index, e)}
+														value={formValues.percent}
+														type="text"
+														name="percent"
+														label="Percent"
+														variant="standard"
+														fullWidth
+													/>
+												</MDBox>
+
+												{index ? (
+													<MDButton
+														type="button"
+														variant="gradient"
+														size="small"
+														color="info"
+														className="button remove"
+														onClick={() => removeFormFields(index)}>
+														Remove
+													</MDButton>
+												) : null}
+											</div>
+										))}
+										<MDBox mb={2} sx={{ textAlign: "right" }}>
+											{/* <MDButton
+												onClick={() => addFormFields()}
+												// variant="gradient"
+												size="large"
+												color="info"> */}
+											<IconButton
+												onClick={() => addFormFields()}
+												aria-label="add"
+												color="info"
+												size="large">
+												<AddBoxIcon />
+											</IconButton>
+											{/* </MDButton> */}
 										</MDBox>
 										<MDBox mt={4} mb={1}>
 											<MDButton
