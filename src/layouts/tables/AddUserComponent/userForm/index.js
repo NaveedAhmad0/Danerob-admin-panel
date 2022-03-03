@@ -15,10 +15,28 @@ import { Card } from "@mui/material";
 import MDButton from "components/MDButton";
 import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
+import axios from "axios";
+import { toast } from "react-toastify";
 // import CoverLayout from "layouts/authentication/components/CoverLayout";
 // import { signin, authenticate } from "../../../authentication/index";
-
+const { useEffect } = React;
 function PlatformSettings() {
+  const [allSales, setAllSales] = useState([]);
+  useEffect(() => {
+    axios
+      .get("https://danerob-api.herokuapp.com/sale/get-all", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          setAllSales(res.data);
+        }
+      })
+      .catch((err) => {});
+  }, []);
+
   const [values, setValues] = useState({
     userAddress: "",
     userTokenAddress: "",
@@ -26,13 +44,13 @@ function PlatformSettings() {
   });
 
   const [Amount, setAmount] = useState();
-  const onChange = (e) => {
-    const re = /^[0-9\b]+$/;
+  // const onChange = (e) => {
+  //   const re = /^[0-9\b]+$/;
 
-    if (e.target.Amount === "" || re.test(e.target.Amount)) {
-      setAmount({ [e.target.name]: e.target.Amount });
-    }
-  };
+  //   if (e.target.Amount === "" || re.test(e.target.Amount)) {
+  //     setAmount({ [e.target.name]: e.target.Amount });
+  //   }
+  // };
 
   const { userAddress, userTokenAddress, Sale } = values;
   const handleChange = (event) => {
@@ -46,6 +64,51 @@ function PlatformSettings() {
   const onSubmit = (e) => {
     e.preventDefault();
     console.log(values, Amount);
+
+    const payload = {
+      userAddress: values.userAddress,
+      userTokenAddress: values.userTokenAddress,
+      saleType: allSales[values.Sale].saleType,
+      amount: parseInt(Amount),
+	  seed:null,
+	  claimDate:new Date(allSales[values.Sale].cliffOpenDate),
+	  transaction:null
+    };
+
+	let scDate = Math.round((new Date(allSales[values.Sale].cliffOpenDate)).getTime() / 1000);
+    const payloadForVesting = {
+      destinationToken:  values.userTokenAddress,
+      destinationOwner: values.userAddress,
+      amount: parseInt(Amount),
+      schedules: [scDate],
+    };
+
+    axios
+      .post("https://danerob-api.herokuapp.com/createVesting", payloadForVesting, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+		payload.seed =  res.data.seed;
+		payload.transaction =  res.data.tx;
+		axios
+		.post("https://danerob-api.herokuapp.com/user/create-user", payload, {
+		  headers: {
+			Authorization: `Bearer ${localStorage.getItem("token")}`,
+		  },
+		})
+		.then((res) => {
+		  if (res.status === 201) {
+			toast.success("User added successfully");
+		  }
+		  console.log(res.data);
+		})
+		.catch((err) => {});
+      })
+      .catch((err) => {});
+
+   
   };
   // const [followsMe, setFollowsMe] = useState(true);
   // const [answersPost, setAnswersPost] = useState(false);
@@ -99,15 +162,22 @@ function PlatformSettings() {
                 fullWidth
                 sx={{ textAlign: "left", fontSize: "13px", paddingTop: "5px" }}
               >
-                <MenuItem value="seed">Seed</MenuItem>
-                <MenuItem value="private">Private</MenuItem>
-                <MenuItem value="public">Public</MenuItem>
+                {allSales.map((sale, index) => {
+                  return (
+                    <MenuItem value={index}>
+                      {sale.saleType + "-" + sale.percentage.toString()}
+                    </MenuItem>
+                  );
+                })}
+
+                {/* <MenuItem value="private">Private</MenuItem>
+                <MenuItem value="public">Public</MenuItem> */}
               </Select>
             </FormControl>
           </MDBox>
           <MDBox mb={2}>
             <MDInput
-              onChange={onChange}
+              onChange={(e) => setAmount(e.target.value)}
               value={Amount}
               label="Amount"
               variant="standard"
