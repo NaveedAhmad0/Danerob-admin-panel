@@ -17,76 +17,75 @@ import axios from "axios";
 // Data
 import authorsTableData from "layouts/tables/data/authorsTableData";
 import MDButton from "components/MDButton";
-import MaterialTable from "material-table";
+// import MaterialTable from "material-table";
 // import { Search } from "@mui/icons-material";
 
 function Tables() {
-  const { columns } = authorsTableData();
-  // const [data, setData] = useState([]);
-  // const columns = [
-  //   { title: "User Address", field: "userAddress" },
-  //   { title: "Username", field: "userTokenAddress", filtering: false },
-  //   { title: "Amount", field: "amount", type: "numeric", filtering: false },
-  //   { title: "sale type", field: "saleType", filtering: false },
-  //   { title: "last claim date", field: "lastClaimedDate", filtering: false },
-  //   { title: "remaining claim", field: "remaningClaim", filtering: false },
-  // ];
-  // useEffect(() => {
-  //   fetch("https://danerob-api.herokuapp.com/user/get-all")
-  //     .then((resp) => resp.json())
-  //     .then((resp) => {
-  //       setData(resp);
-  //     });
-  // }, []);
+	const { columns, rows } = authorsTableData();
+	// const [data, setData] = useState([]);
+	// const columns = [
+	//   { title: "User Address", field: "userAddress" },
+	//   { title: "Username", field: "userTokenAddress", filtering: false },
+	//   { title: "Amount", field: "amount", type: "numeric", filtering: false },
+	//   { title: "sale type", field: "saleType", filtering: false },
+	//   { title: "last claim date", field: "lastClaimedDate", filtering: false },
+	//   { title: "remaining claim", field: "remaningClaim", filtering: false },
+	// ];
+	// useEffect(() => {
+	//   fetch("https://danerob-api.herokuapp.com/user/get-all")
+	//     .then((resp) => resp.json())
+	//     .then((resp) => {
+	//       setData(resp);
+	//     });
+	// }, []);
 
-  //   return (
+	//   return (
 
-  // }
-  const [data, setData] = useState([]);
+	// }
+	const [data, setData] = useState([]);
 
-  useEffect(() => {
-    axios
-      .get("/user/get-all")
-      .then((res) => {
-        setData(res.data);
-        // console.log(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+	useEffect(() => {
+		axios
+			.get("/user/get-all")
+			.then((res) => {
+				setData(res.data);
+				// console.log(res.data);
+			})
+			.catch((err) => console.log(err));
+	}, []);
 
-  return (
-    <DashboardLayout>
-      <DashboardNavbar />
-      <MDBox pt={6} pb={3}>
-        <Grid container spacing={6}>
-          <Grid item xs={12}>
-            <Card>
-              <MDBox
-                mx={2}
-                mt={-3}
-                py={3}
-                px={2}
-                variant="gradient"
-                bgColor="info"
-                borderRadius="lg"
-                coloredShadow="info"
-                sx={{ display: "flex", justifyContent: "space-between" }}
-              >
-                <MDTypography variant="h6" color="white">
-                  Users Table
-                </MDTypography>
-                <MDButton href="/add-user">Add User</MDButton>
-              </MDBox>
-              <MDBox pt={3}>
-                <DataTable
-                  table={{ columns, data }}
-                  isSorted={false}
-                  entriesPerPage={false}
-                  showTotalEntries={false}
-                  noEndBorder
-                />
-              </MDBox>
-              {/* <div>
+	return (
+		<DashboardLayout>
+			<DashboardNavbar />
+			<MDBox pt={6} pb={3}>
+				<Grid container spacing={6}>
+					<Grid item xs={12}>
+						<Card>
+							<MDBox
+								mx={2}
+								mt={-3}
+								py={3}
+								px={2}
+								variant="gradient"
+								bgColor="info"
+								borderRadius="lg"
+								coloredShadow="info"
+								sx={{ display: "flex", justifyContent: "space-between" }}>
+								<MDTypography variant="h6" color="white">
+									Users Table
+								</MDTypography>
+								<MDButton href="/add-user">Add User</MDButton>
+							</MDBox>
+							<MDBox pt={3}>
+								<DataTable
+									table={{ columns, rows }}
+									isSorted={false}
+									entriesPerPage={false}
+									showTotalEntries={false}
+									noEndBorder
+								/>
+							</MDBox>
+							{/* <div>
                 <MaterialTable
                   title="User Data"
                   data={data}
@@ -122,12 +121,12 @@ function Tables() {
                   }}
                 />
               </div> */}
-            </Card>
-          </Grid>
-        </Grid>
-      </MDBox>
-    </DashboardLayout>
-  );
+						</Card>
+					</Grid>
+				</Grid>
+			</MDBox>
+		</DashboardLayout>
+	);
 }
 
 export default Tables;

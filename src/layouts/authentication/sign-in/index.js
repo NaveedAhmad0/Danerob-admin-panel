@@ -1,10 +1,4 @@
-<<<<<<< HEAD
-/* eslint-disable import/no-duplicates */
-/* eslint-disable consistent-return */
-import { useState } from "react";
-=======
 import { useState, useEffect } from "react";
->>>>>>> dev
 
 // react-router-dom components
 import { Link, useNavigate } from "react-router-dom";
