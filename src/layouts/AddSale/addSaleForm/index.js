@@ -14,7 +14,7 @@ import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import { Card } from "@mui/material";
-// import MDTypography from "components/MDTypography";
+import MDTypography from "components/MDTypography";
 
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
@@ -84,12 +84,43 @@ function Overview() {
 							<Card>
 								<MDBox pt={4} pb={3} px={8}>
 									<MDBox>
+										<MDBox mb={2} sx={{ display: "flex" }}>
+											<MDBox sx={{ marginTop: "5px", marginRight: "10px" }}>
+												<MDTypography
+													display="inline"
+													variant="h6"
+													textTransform="capitalize"
+													fontWeight="bold">
+													Number of Rounds :
+												</MDTypography>
+											</MDBox>
+											<MDBox>
+												<MDInput
+													onChange={(e) => handleChange(e)}
+													// value={percent}
+													type="text"
+													name="percent"
+													label="Rounds"
+													// variant="box"
+													size="small"
+												/>
+											</MDBox>
+											<MDBox>
+												<MDButton
+													onClick={(e) => onSubmit(e)}
+													variant="gradient"
+													size="small"
+													color="info"
+													large>
+													ADD
+												</MDButton>
+											</MDBox>
+										</MDBox>
 										<MDBox mb={2}>
 											<FormControl type="text" variant="standard" fullWidth>
 												<Select
 													labelId="demo-simple-select-standard-label"
 													id="demo-simple-select-standard"
-													label="Sale"
 													onChange={(e) => handleChange(e)}
 													value={values.salePeriod}
 													name="salePeriod"
