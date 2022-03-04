@@ -50,7 +50,7 @@ import {
 // import brandDark from "assets/images/logo-ct-dark.png";
 import AddUser from "./layouts/tables/AddUserComponent/index";
 import AddSale from "./layouts/AddSale/addSaleForm/index";
-import ResetPassword from "./layouts/authentication/reset-password/cover/index";
+// import ResetPassword from "./layouts/authentication/reset-password/cover/index";
 import EditProfile from "./layouts/profile/EditProfile";
 import SignIn from "./layouts/authentication/sign-in";
 export default function App() {
@@ -176,10 +176,9 @@ export default function App() {
 			<Routes>
 				<Route path="/admin" element={<SignIn />} />
 				{getRoutes(routes)}
-				<Route path="/add-user" element={<AddUser />} />
-				<Route path="/add-sale" element={<AddSale />} />
-				<Route path="/reset-password" element={<ResetPassword />} />
-				<Route path="/editProfile" element={<EditProfile />} />
+				<Route path="/admin/add-user" element={<AddUser />} />
+				<Route path="/admin/add-sale" element={<AddSale />} />
+				<Route path="/admin/editProfile" element={<EditProfile />} />
 			</Routes>
 		</ThemeProvider>
 	);

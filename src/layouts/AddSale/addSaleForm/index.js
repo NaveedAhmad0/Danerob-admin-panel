@@ -173,7 +173,7 @@ function Overview() {
 										<MDBox mt={4} mb={1}>
 											<MDButton
 												onClick={(e) => onSubmit(e)}
-												href="/manage-sale"
+												href="/admin/manage-sale"
 												variant="gradient"
 												color="info"
 												large>

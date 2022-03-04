@@ -72,7 +72,7 @@ function ProfileInfoCard({ title, description, info, action, shadow }) {
 				</MDTypography>
 				<MDTypography
 					component={Link}
-					to="/editProfile"
+					to="/admin/editProfile"
 					variant="body2"
 					color="secondary">
 					<Tooltip title={action.tooltip} placement="top">

@@ -57,7 +57,7 @@ function Basic() {
 			.then((response) => response.json())
 			.then((result) => {
 				localStorage.setItem("token", result?.accessToken);
-				navigate("/dashboard");
+				navigate("/admin/dashboard");
 				console.log(result);
 			})
 			.catch((error) => console.log("error", error));
@@ -117,7 +117,7 @@ function Basic() {
 						<MDBox mt={4} mb={1}>
 							<MDButton
 								onClick={(event) => onSubmit(event)}
-								href="/dashboard"
+								href="/admin/dashboard"
 								variant="gradient"
 								color="info"
 								fullWidth>
@@ -129,7 +129,7 @@ function Basic() {
 								Forgot password?{" "}
 								<MDTypography
 									component={Link}
-									to="/editProfile"
+									to="/admin/editProfile"
 									variant="button"
 									color="info"
 									fontWeight="medium"

@@ -16,46 +16,45 @@ import authorsTableData from "layouts/tables/data/authorsTableData";
 import MDButton from "components/MDButton";
 
 function Tables() {
-  const { columns, rows } = authorsTableData();
+	const { columns, rows } = authorsTableData();
 
-  return (
-    <DashboardLayout>
-      <DashboardNavbar />
-      <MDBox pt={6} pb={3}>
-        <Grid container spacing={6}>
-          <Grid item xs={12}>
-            <Card>
-              <MDBox
-                mx={2}
-                mt={-3}
-                py={3}
-                px={2}
-                variant="gradient"
-                bgColor="info"
-                borderRadius="lg"
-                coloredShadow="info"
-                sx={{ display: "flex", justifyContent: "space-between" }}
-              >
-                <MDTypography variant="h6" color="white">
-                  Users Table
-                </MDTypography>
-                <MDButton href="/add-user">Add User</MDButton>
-              </MDBox>
-              <MDBox pt={3}>
-                <DataTable
-                  table={{ columns, rows }}
-                  isSorted={false}
-                  entriesPerPage={false}
-                  showTotalEntries={false}
-                  noEndBorder
-                />
-              </MDBox>
-            </Card>
-          </Grid>
-        </Grid>
-      </MDBox>
-    </DashboardLayout>
-  );
+	return (
+		<DashboardLayout>
+			<DashboardNavbar />
+			<MDBox pt={6} pb={3}>
+				<Grid container spacing={6}>
+					<Grid item xs={12}>
+						<Card>
+							<MDBox
+								mx={2}
+								mt={-3}
+								py={3}
+								px={2}
+								variant="gradient"
+								bgColor="info"
+								borderRadius="lg"
+								coloredShadow="info"
+								sx={{ display: "flex", justifyContent: "space-between" }}>
+								<MDTypography variant="h6" color="white">
+									Users Table
+								</MDTypography>
+								<MDButton href="/admin/add-user">Add User</MDButton>
+							</MDBox>
+							<MDBox pt={3}>
+								<DataTable
+									table={{ columns, rows }}
+									isSorted={false}
+									entriesPerPage={false}
+									showTotalEntries={false}
+									noEndBorder
+								/>
+							</MDBox>
+						</Card>
+					</Grid>
+				</Grid>
+			</MDBox>
+		</DashboardLayout>
+	);
 }
 
 export default Tables;
