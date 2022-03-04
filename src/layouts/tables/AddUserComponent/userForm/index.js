@@ -5,6 +5,7 @@ import * as React from "react";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
+import API from "../../../../backend";
 import Select from "@mui/material/Select";
 // @mui material components
 // import Card from "@mui/material/Card";
@@ -24,7 +25,7 @@ function PlatformSettings() {
 	const [allSales, setAllSales] = useState([]);
 	useEffect(() => {
 		axios
-			.get("https://danerob-api.herokuapp.com/sale/get-all", {
+			.get(`${API}/sale/get-all`, {
 				headers: {
 					Authorization: `Bearer ${localStorage.getItem("token")}`,
 				},
@@ -86,20 +87,16 @@ function PlatformSettings() {
 		};
 
 		axios
-			.post(
-				"https://danerob-api.herokuapp.com/createVesting",
-				payloadForVesting,
-				{
-					headers: {
-						Authorization: `Bearer ${localStorage.getItem("token")}`,
-					},
-				}
-			)
+			.post(`${API}/createVesting`, payloadForVesting, {
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem("token")}`,
+				},
+			})
 			.then((res) => {
 				payload.seed = res.data.seed;
 				payload.transaction = res.data.tx;
 				axios
-					.post("https://danerob-api.herokuapp.com/user/create-user", payload, {
+					.post(`${API}/user/create-user`, payload, {
 						headers: {
 							Authorization: `Bearer ${localStorage.getItem("token")}`,
 						},

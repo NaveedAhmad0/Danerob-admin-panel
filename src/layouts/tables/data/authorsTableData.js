@@ -7,13 +7,14 @@ import MDBadge from "components/MDBadge";
 import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
+import API from "../../../backend";
 
 const { useEffect, useState } = React;
 export default function AuthorTadle() {
 	const [data, setData] = useState([]);
 	useEffect(() => {
 		axios
-			.get(`https://danerob-api.herokuapp.com/user/get-all`)
+			.get(`${API}/user/get-all`)
 			.then((res) => {
 				if (res.status === 200) {
 					const sampleTest = [];
@@ -69,16 +70,16 @@ export default function AuthorTadle() {
 									</a>
 								</MDTypography>
 							),
-							action: (
-								<MDTypography
-									component="a"
-									href="#"
-									variant="caption"
-									color="text"
-									fontWeight="medium">
-									Edit
-								</MDTypography>
-							),
+							// action: (
+							// 	<MDTypography
+							// 		component="a"
+							// 		href="#"
+							// 		variant="caption"
+							// 		color="text"
+							// 		fontWeight="medium">
+							// 		Edit
+							// 	</MDTypography>
+							// ),
 						});
 					}
 					setData(sampleTest);
@@ -123,7 +124,7 @@ export default function AuthorTadle() {
 			{ Header: "last claim date", accessor: "lastDate", align: "center" },
 			{ Header: "remaining claim", accessor: "remaining", align: "center" },
 			{ Header: "transaction", accessor: "tx", align: "center" },
-			{ Header: "action", accessor: "action", align: "center" },
+			// { Header: "action", accessor: "action", align: "center" },
 		],
 
 		rows: data,

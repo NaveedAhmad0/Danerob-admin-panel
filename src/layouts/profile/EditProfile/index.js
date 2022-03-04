@@ -8,6 +8,7 @@ import MDTypography from "components/MDTypography";
 import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import { toast } from "react-toastify";
+import API from "../../../backend";
 
 // Authentication layout components
 import CoverLayout from "layouts/authentication/components/CoverLayout";
@@ -32,17 +33,13 @@ function Cover() {
 	const { name, email, password } = values;
 	useEffect(() => {
 		setOldPass(values.password);
-		axios
-			.get(
-				"https://danerob-api.herokuapp.com/admin/get-profile?email=admin%40mail.com"
-			)
-			.then((res) => {
-				setValues({
-					name: res.data.name,
-					email: res.data.email,
-					password: "",
-				});
+		axios.get(`${API}/admin/get-profile?email=admin%40mail.com`).then((res) => {
+			setValues({
+				name: res.data.name,
+				email: res.data.email,
+				password: "",
 			});
+		});
 	}, []);
 	const handleChange = (event) => {
 		setValues({
@@ -79,10 +76,7 @@ function Cover() {
 		}
 
 		axios
-			.patch(
-				"https://danerob-api.herokuapp.com/admin/update-admin?email=admin%40mail.com",
-				payload
-			)
+			.patch(`${API}/admin/update-admin?email=admin%40mail.com`, payload)
 			.then((res) => {
 				if (res.status === 200) {
 					toast.success("Details changed successfully");
@@ -91,34 +85,6 @@ function Cover() {
 			})
 			.catch((error) => console.log("error", error));
 	}
-
-	// const [email, setEmail] = useState("");
-	// const [password, setPassword] = useState("");
-	// const [confirmPassword, setConfirmPassword] = useState("");
-
-	// const dispatch = useDispatch();
-
-	// const userLogin = useSelector((state) => state.userLogin);
-	// const { userInfo } = userLogin;
-
-	// const userUpdate = useSelector((state) => state.userUpdate);
-	// const { loading, error, success } = userUpdate;
-
-	// useEffect(() => {
-	// 	if (!userInfo) {
-	// 		// history.push("/");
-	// 		<Navigate to="/" />;
-	// 	} else {
-	// 		setName(userInfo.name);
-	// 		setEmail(userInfo.email);
-	// 	}
-	// }, [history, userInfo]);
-
-	// const submitHandler = (e) => {
-	// 	e.preventDefault();onSubmit
-
-	// 	dispatch(updateProfile({ name, email, password }));
-	// };
 
 	return (
 		<CoverLayout image={bgImage}>

@@ -72,7 +72,7 @@ function Overview() {
 			};
 
 			axios
-				.post(`https://danerob-api.herokuapp.com/sale/create-sale`, payload)
+				.post(`http://13.233.155.132/api/sale/create-sale`, payload)
 				.then((res) => {
 					if (res.status == 201) {
 						setIsLoading(false);

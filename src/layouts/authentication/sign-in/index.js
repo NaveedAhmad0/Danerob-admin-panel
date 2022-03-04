@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 // react-router-dom components
 import { Link, useNavigate } from "react-router-dom";
-
+import API from "../../../backend";
 // @mui material components
 import Card from "@mui/material/Card";
 // import Switch from "@mui/material/Switch";
@@ -53,7 +53,7 @@ function Basic() {
 			body: JSON.stringify(logindetails),
 		};
 
-		fetch("https://danerob-api.herokuapp.com/admin/login", requestOptions)
+		fetch(`${API}/admin/login`, requestOptions)
 			.then((response) => response.json())
 			.then((result) => {
 				localStorage.setItem("token", result?.accessToken);
