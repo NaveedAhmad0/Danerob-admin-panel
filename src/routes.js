@@ -25,7 +25,7 @@ import Tables from "layouts/tables";
 import ManageSales from "layouts/ManageSales/index";
 // import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
-import SignIn from "layouts/authentication/sign-in";
+// import SignIn from "layouts/authentication/sign-in";
 // import SignUp from "layouts/authentication/sign-up";
 
 // @mui icons
@@ -72,14 +72,14 @@ const routes = [
 		route: "/profile",
 		component: <Profile />,
 	},
-	{
-		type: "collapse",
-		name: "Sign Out",
-		key: "sign-in",
-		icon: <Icon fontSize="small">login</Icon>,
-		route: "/",
-		component: <SignIn />,
-	},
+	// {
+	// 	type: "collapse",
+	// 	name: "Sign Out",
+	// 	key: "sign-in",
+	// 	icon: <Icon fontSize="small">login</Icon>,
+	// 	route: "/",
+	// 	component: <SignIn />,
+	// },
 	// {
 	// 	type: "collapse",
 	// 	name: "Sign Up",

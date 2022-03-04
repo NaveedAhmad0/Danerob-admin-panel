@@ -1,6 +1,7 @@
 {
   "name": "DanerobNFTs",
   "version": "2.1.0",
+  "homepage": "/admin",
   "private": true,
   "proxy": "https://danerob-api.herokuapp.com",
   "author": "Creative Tim",

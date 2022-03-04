@@ -1,5 +1,13 @@
 import { useState, useEffect } from "react";
 // react-router components
+// import {
+// 	BrowserRouter,
+// 	Routes,
+// 	Route,
+// 	useLocation,
+// 	Switch,
+// 	Redirect,
+// } from "react-router-dom";
 import { Routes, Route, useLocation } from "react-router-dom";
 // @mui material components
 import { ThemeProvider } from "@mui/material/styles";
@@ -60,6 +68,7 @@ export default function App() {
 	const [onMouseEnter, setOnMouseEnter] = useState(false);
 	// const [rtlCache, setRtlCache] = useState(null);
 	const { pathname } = useLocation();
+	// const navigate = useNavigate();
 
 	// Cache for the rtl
 	// useMemo(() => {
@@ -165,7 +174,7 @@ export default function App() {
 			)}
 			{layout === "vr" && <Configurator />}
 			<Routes>
-				<Route path="/" element={<SignIn />} />
+				<Route path="/admin" element={<SignIn />} />
 				{getRoutes(routes)}
 				<Route path="/add-user" element={<AddUser />} />
 				<Route path="/add-sale" element={<AddSale />} />
