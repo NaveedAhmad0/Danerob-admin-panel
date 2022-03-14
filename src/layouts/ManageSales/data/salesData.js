@@ -33,7 +33,7 @@ export default function Dataa() {
 									/>
 								</MDBox>
 							),
-							function: <Date title={res.data[i].cliffOpenDate} />,
+							function: <Date title={new window.Date(res.data[i].cliffOpenDate).toDateString() + new window.Date(res.data[i].cliffOpenDate).toTimeString()} />,
 							status: <Percent title={res.data[i].percentage} />,
 							// action: (
 							//   <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">

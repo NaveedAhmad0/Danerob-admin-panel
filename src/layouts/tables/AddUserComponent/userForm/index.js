@@ -84,11 +84,14 @@ function PlatformSettings() {
     });
     
 
+	scDates.forEach((item)=>{
+
+
     const payloadForVesting = {
       destinationToken: values.userTokenAddress,
       destinationOwner: values.userAddress,
       amount: parseInt(Amount),
-      schedules: [...scDates],
+      schedules: [item],
     };
 
     axios
@@ -115,6 +118,8 @@ function PlatformSettings() {
           .catch((err) => {});
       })
       .catch((err) => {});
+
+	});
   };
   // const [followsMe, setFollowsMe] = useState(true);
   // const [answersPost, setAnswersPost] = useState(false);

@@ -12,8 +12,38 @@ import API from "../../../backend";
 const { useEffect, useState } = React;
 export default function AuthorTadle() {
 	const [data, setData] = useState([]);
+	const [sales, setSales] = useState([]);
+
+	const getRemainingClaims = (item) =>{
+
+		if(sales.length){
+		
+
+		const userData =  data.filter((m) => m.userAddress == item.userAddress);
+		const rem = data.filter((m) => m.claimDate);
+
+
+		return {total:userData.length,remaining:userData.length-rem};
+		
+
+
+		}
+
+		return {total:0,remaining:0};
+
+	}
+
 	useEffect(() => {
-		axios
+		axios(`${API}/sale/get-all`, {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem("token")}`,
+			},
+		})
+			.then((sales) => {
+
+				setSales(sales.data);
+				
+				axios
 			.get(`${API}/user/get-all`)
 			.then((res) => {
 				if (res.status === 200) {
@@ -49,7 +79,7 @@ export default function AuthorTadle() {
 									variant="caption"
 									color="text"
 									fontWeight="medium">
-									{res.data[i].remaningClaim || "N/A"}
+									{getRemainingClaims(res.data[i]).total} / {getRemainingClaims(res.data[i]).remaining}
 								</MDTypography>
 							),
 							tx: (
@@ -87,6 +117,9 @@ export default function AuthorTadle() {
 				console.log(res.data);
 			})
 			.catch((err) => console.log(err));
+			
+			});
+	
 	}, []);
 	const Author = ({ address }) => (
 		<MDBox display="flex" alignItems="center" lineHeight={1}>
