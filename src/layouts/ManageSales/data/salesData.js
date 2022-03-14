@@ -27,14 +27,16 @@ export default function Dataa() {
 								<MDBox ml={-1}>
 									<MDBadge
 										badgeContent={res.data[i].saleType}
-										color="secondary"
+										color={res.data[i].saleType==='private' ? 
+										"success" : res.data[i].saleType==='seed' 
+									?  'primary' : 'warning'}
 										variant="gradient"
 										size="sm"
 									/>
 								</MDBox>
 							),
 							function: <Date title={new window.Date(res.data[i].cliffOpenDate).toDateString() + new window.Date(res.data[i].cliffOpenDate).toTimeString()} />,
-							status: <Percent title={res.data[i].percentage} />,
+							status: <Percent title={res.data[i].percentage + '%'} />,
 							// action: (
 							//   <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
 							//     Edit

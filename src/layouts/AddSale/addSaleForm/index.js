@@ -47,7 +47,7 @@ function Overview() {
 
 	const [isLoading, setIsLoading] = useState(false);
 	const [values, setValues] = useState({
-		salePeriod: "",
+		salePeriod: "Select Sale Type",
 		// openDate: "",
 		// percent: "",
 	});
@@ -105,12 +105,14 @@ function Overview() {
 													onChange={(e) => handleChange(e)}
 													value={values.salePeriod}
 													name="salePeriod"
+													placeholder="Select Sale Type"
 													fullWidth
 													sx={{
 														textAlign: "left",
 														fontSize: "13px",
 														paddingTmop: "5px",
 													}}>
+													<MenuItem  value="Select Sale Type">Select Sale Type</MenuItem>
 													<MenuItem value="seed">Seed</MenuItem>
 													<MenuItem value="private">Private</MenuItem>
 													<MenuItem value="public">Public</MenuItem>
