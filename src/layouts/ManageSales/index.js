@@ -9,7 +9,7 @@ import MDTypography from "components/MDTypography";
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import DataTable from "examples/Tables/DataTable";
+import SaleTable from "examples/Tables/DataTable/SaleTable.js";
 
 // Data
 import salesData from "layouts/ManageSales/data/salesData";
@@ -41,7 +41,7 @@ function Tables() {
 								<MDButton href="/admin/add-sale">Add New Sale</MDButton>
 							</MDBox>
 							<MDBox pt={3}>
-								<DataTable
+								<SaleTable
 									table={{ columns, rows }}
 									isSorted={false}
 									entriesPerPage={false}

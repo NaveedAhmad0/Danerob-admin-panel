@@ -5,6 +5,7 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDBadge from "components/MDBadge";
 import axios from "axios";
+// import { DataTable } from "../../../examples/Tables/DataTable/index.js";
 import React from "react";
 import { Link } from "react-router-dom";
 import API from "../../../backend";
@@ -12,8 +13,6 @@ import API from "../../../backend";
 const { useEffect, useState } = React;
 export default function AuthorTadle() {
 	const [data, setData] = useState([]);
-
-	
 
 	useEffect(() => {
 		axios
@@ -29,9 +28,13 @@ export default function AuthorTadle() {
 								<MDBox ml={-1}>
 									<MDBadge
 										badgeContent={res.data[i].saleType}
-										color={res.data[i].saleType==='private' ? 
-										"success" : res.data[i].saleType==='seed' 
-									?  'primary' : 'warning'}
+										color={
+											res.data[i].saleType === "private"
+												? "success"
+												: res.data[i].saleType === "seed"
+												? "primary"
+												: "warning"
+										}
 										variant="gradient"
 										size="sm"
 									/>
@@ -54,7 +57,7 @@ export default function AuthorTadle() {
 									variant="caption"
 									color="text"
 									fontWeight="medium">
-									  {res.data[i].remaningClaim || 0} / {res.data[i].totalAmount} 
+									{res.data[i].remaningClaim || 0} / {res.data[i].totalAmount}
 								</MDTypography>
 							),
 							tx: (
@@ -123,6 +126,7 @@ export default function AuthorTadle() {
 				accessor: "useraddress",
 				width: "40%",
 				align: "left",
+				// Filter: DataTable,
 			},
 			{ Header: "amount", accessor: "amount", align: "left" },
 			{ Header: "sale period", accessor: "sale", align: "center" },

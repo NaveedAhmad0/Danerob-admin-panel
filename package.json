@@ -3,7 +3,7 @@
   "version": "2.1.0",
   "homepage": "/admin",
   "private": true,
-  "proxy": "https://danerob-api.herokuapp.com",
+  "proxy": "http://localhost:4000/api",
   "author": "Creative Tim",
   "license": "See license in https://www.creative-tim.com/license",
   "description": "React version of Material Dashboard 2 by Creative Tim",

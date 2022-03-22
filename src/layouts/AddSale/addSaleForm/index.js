@@ -6,7 +6,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 // import Divider from "@mui/material/Divider";
 import FormControl from "@mui/material/FormControl";
-
+import API from "../../../backend";
 import axios from "axios";
 import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
@@ -72,7 +72,7 @@ function Overview() {
 			};
 
 			axios
-				.post(`http://13.233.155.132/api/sale/create-sale`, payload)
+				.post(`${API}/sale/create-sale`, payload)
 				.then((res) => {
 					if (res.status == 201) {
 						setIsLoading(false);
@@ -112,7 +112,9 @@ function Overview() {
 														fontSize: "13px",
 														paddingTmop: "5px",
 													}}>
-													<MenuItem  value="Select Sale Type">Select Sale Type</MenuItem>
+													<MenuItem value="Select Sale Type">
+														Select Sale Type
+													</MenuItem>
 													<MenuItem value="seed">Seed</MenuItem>
 													<MenuItem value="private">Private</MenuItem>
 													<MenuItem value="public">Public</MenuItem>
