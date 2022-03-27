@@ -67,7 +67,7 @@ function Overview() {
 			// sale.salePeriod
 			let payload = {
 				saleType: values.salePeriod,
-				cliffOpenDate: formValues[i].openDate,
+				cliffOpenDate: new Date(formValues[i].openDate).toISOString(),
 				percentage: parseInt(formValues[i].percent),
 			};
 
