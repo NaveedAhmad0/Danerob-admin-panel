@@ -1,141 +1,125 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
-/* eslint-disable react/function-component-definition */
-import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
-import MDBadge from "components/MDBadge";
 import axios from "axios";
 // import { DataTable } from "../../../examples/Tables/DataTable/index.js";
 import React from "react";
 import { Link } from "react-router-dom";
 import API from "../../../backend";
+import index from "../../../examples/Tables/DataTable/index";
+import MDBox from "components/MDBox";
+import MDTypography from "components/MDTypography";
+import MDBadge from "components/MDBadge";
 
 const { useEffect, useState } = React;
 export default function AuthorTadle() {
-	const [data, setData] = useState([]);
+  const [data, setData] = useState([]);
 
-	useEffect(() => {
-		axios
-			.get(`${API}/user/get-all`)
-			.then((res) => {
-				if (res.status === 200) {
-					const sampleTest = [];
-					for (let i = 0; i < res.data.length; i += 1) {
-						sampleTest.push({
-							useraddress: <Author address={res.data[i].userAddress} />,
-							amount: <Job title={res.data[i].amount} />,
-							sale: (
-								<MDBox ml={-1}>
-									<MDBadge
-										badgeContent={res.data[i].saleType}
-										color={
-											res.data[i].saleType === "private"
-												? "success"
-												: res.data[i].saleType === "seed"
-												? "primary"
-												: "warning"
-										}
-										variant="gradient"
-										size="sm"
-									/>
-								</MDBox>
-							),
-							lastDate: (
-								<MDTypography
-									component="a"
-									href="#"
-									variant="caption"
-									color="text"
-									fontWeight="medium">
-									{res.data[i].claimDate || "N/A"}
-								</MDTypography>
-							),
-							remaining: (
-								<MDTypography
-									component="a"
-									href="#"
-									variant="caption"
-									color="text"
-									fontWeight="medium">
-									{res.data[i].remaningClaim || 0} / {res.data[i].totalAmount}
-								</MDTypography>
-							),
-							tx: (
-								<MDTypography
-									component="a"
-									href="#"
-									variant="caption"
-									color="text"
-									fontWeight="medium">
-									<a
-										href={`https://explorer.solana.com/tx/${res.data[i].transaction}?cluster=devnet`}
-										target="_blank"
-										rel="noreferrer">
-										{res.data[i].transaction
-											? res.data[i].transaction.substring(0, 10)
-											: ""}
-										...
-									</a>
-								</MDTypography>
-							),
-							// action: (
-							// 	<MDTypography
-							// 		component="a"
-							// 		href="#"
-							// 		variant="caption"
-							// 		color="text"
-							// 		fontWeight="medium">
-							// 		Edit
-							// 	</MDTypography>
-							// ),
-						});
-					}
-					setData(sampleTest);
-				}
-				console.log(res.data);
-			})
-			.catch((err) => console.log(err));
-	}, []);
-	const Author = ({ address }) => (
-		<MDBox display="flex" alignItems="center" lineHeight={1}>
-			{/* <MDAvatar src={image} name={address} size="sm" /> */}
-			<MDBox ml={2} lineHeight={1}>
-				<MDTypography display="block" variant="button" fontWeight="medium">
-					{address}
-				</MDTypography>
-			</MDBox>
-		</MDBox>
-	);
+  const init = () => {
+    axios
+      .get(`${API}/user/get-all`)
+      .then((res) => {
+        if (res.status === 200) {
+          setData(res.data);
+        }
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
 
-	const Job = ({ title }) => (
-		<MDBox lineHeight={1} textAlign="left">
-			<MDTypography
-				display="block"
-				variant="caption"
-				color="text"
-				fontWeight="medium">
-				{title}
-			</MDTypography>
-		</MDBox>
-	);
+  useEffect(() => {
+    init();
+  }, []);
 
-	return {
-		columns: [
-			{
-				Header: "User address",
-				accessor: "useraddress",
-				width: "40%",
-				align: "left",
-				// Filter: DataTable,
-			},
-			{ Header: "amount", accessor: "amount", align: "left" },
-			{ Header: "sale period", accessor: "sale", align: "center" },
-			{ Header: "last claim date", accessor: "lastDate", align: "center" },
-			{ Header: "remaining claim", accessor: "remaining", align: "center" },
-			{ Header: "transaction", accessor: "tx", align: "center" },
-			// { Header: "action", accessor: "action", align: "center" },
-		],
+  return {
+    columns: [
+      {
+        Header: "User address",
+        accessor: (d) => d.userAddress,
+        width: "40%",
+        align: "left",
+      },
+      { Header: "amount", accessor: "amount", align: "left" },
+      {
+        Header: "sale period",
+        accessor: (d) => {
+          return (
+            <MDBox ml={-1}>
+              <MDBadge
+                badgeContent={d.saleType}
+                color={
+                  d.saleType === "private"
+                    ? "success"
+                    : d.saleType === "seed"
+                    ? "primary"
+                    : "warning"
+                }
+                variant="gradient"
+                size="sm"
+              />
+            </MDBox>
+          );
+        },
 
-		rows: data,
-	};
+        align: "center",
+      },
+      {
+        Header: "last claim date",
+        accessor: (d) => {
+          return (
+            <MDTypography
+              component="a"
+              href="#"
+              variant="caption"
+              color="text"
+              fontWeight="medium"
+            >
+              {d.claimDate || "N/A"}
+            </MDTypography>
+          );
+        },
+        align: "center",
+      },
+      {
+        Header: "remaining claim",
+        accessor: (d) => {
+          return (
+            <MDTypography
+              component="a"
+              href="#"
+              variant="caption"
+              color="text"
+              fontWeight="medium"
+            >
+              {d.remaningClaim || 0} / {d.totalAmount}
+            </MDTypography>
+          );
+        },
+        align: "center",
+      },
+      {
+        Header: "transaction",
+        accessor: (d) => {
+          return (
+            <MDTypography
+              component="a"
+              href="#"
+              variant="caption"
+              color="text"
+              fontWeight="medium"
+            >
+              <a
+                href={`https://explorer.solana.com/tx/${d.transaction}?cluster=devnet`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {d.transaction ? d.transaction.substring(0, 10) : ""}
+                ...
+              </a>
+            </MDTypography>
+          );
+        },
+        align: "center",
+      },
+      // { Header: "action", accessor: "action", align: "center" },
+    ],
+    rows: data,
+  };
 }
