@@ -10,76 +10,84 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function Dataa() {
-	const [data, setData] = useState([]);
+  const [data, setData] = useState([]);
 
-	useEffect(() => {
-		axios(`${API}/sale/get-all`, {
-			headers: {
-				Authorization: `Bearer ${localStorage.getItem("token")}`,
-			},
-		})
-			.then((res) => {
-				if (res.status == 200) {
-					const sampleTest = [];
-					for (let i = 0; i < res.data.length; i += 1) {
-						sampleTest.push({
-							Sale: (
-								<MDBox ml={-1}>
-									<MDBadge
-										badgeContent={res.data[i].saleType}
-										color={res.data[i].saleType==='private' ? 
-										"success" : res.data[i].saleType==='seed' 
-									?  'primary' : 'warning'}
-										variant="gradient"
-										size="sm"
-									/>
-								</MDBox>
-							),
-							function: <Date title={new window.Date(res.data[i].cliffOpenDate).toDateString() + new window.Date(res.data[i].cliffOpenDate).toTimeString()} />,
-							status: <Percent title={res.data[i].percentage + '%'} />,
-							// action: (
-							//   <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-							//     Edit
-							//   </MDTypography>
-							// ),
-						});
-					}
-					setData(sampleTest);
-				}
-			})
-			.catch((err) => console.log(err));
-	}, []);
+  useEffect(() => {
+    axios(`${API}/sale/get-all`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          setData(res.data);
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
-	const Date = ({ title }) => (
-		<MDBox lineHeight={1} textAlign="left">
-			<MDTypography
-				display="block"
-				variant="caption"
-				color="text"
-				fontWeight="medium">
-				{title}
-			</MDTypography>
-		</MDBox>
-	);
-	const Percent = ({ title }) => (
-		<MDBox lineHeight={1} textAlign="left">
-			<MDTypography
-				display="block"
-				variant="caption"
-				color="text"
-				fontWeight="medium">
-				{title}
-			</MDTypography>
-		</MDBox>
-	);
+  const Date = ({ title }) => (
+    <MDBox lineHeight={1} textAlign="left">
+      <MDTypography
+        display="block"
+        variant="caption"
+        color="text"
+        fontWeight="medium"
+      >
+        {title}
+      </MDTypography>
+    </MDBox>
+  );
+  const Percent = ({ title }) => (
+    <MDBox lineHeight={1} textAlign="left">
+      <MDTypography
+        display="block"
+        variant="caption"
+        color="text"
+        fontWeight="medium"
+      >
+        {title}
+      </MDTypography>
+    </MDBox>
+  );
 
-	return {
-		columns: [
-			{ Header: "Sale Period", accessor: "Sale", align: "center" },
-			{ Header: "Cliff Open Date", accessor: "function", align: "center" },
-			{ Header: "Percent", accessor: "status", align: "left" },
-		],
+  return {
+    columns: [
+      {
+        Header: "Sale Period",
+        accessor: (d) => d.saleType,
+        align: "center",
+        getProps: (d) => {
+          return {
+            style: {
+              background: d.saleType === "seed" ? "red" : "green",
+            },
+          };
+        },
+      },
+      {
+        Header: "Cliff Open Date",
+        accessor: (d) => {
+          return (
+            <Date
+              title={
+                new window.Date(d.cliffOpenDate).toDateString() +
+                new window.Date(d.cliffOpenDate).toTimeString()
+              }
+            />
+          );
+        },
+        align: "center",
+      },
+      {
+        Header: "Percent",
+        accessor: (d) => {
+          return <Percent title={d.percentage + "%"} />;
+        },
+        align: "left",
+      },
+    ],
 
-		rows: data,
-	};
+    rows: data,
+  };
 }

@@ -498,7 +498,6 @@ function DataTable({
           )}
         </MDBox>
       )}
-
       <Table {...getTableProps()}>
         <MDBox component="thead">
           {headerGroups.map((headerGroup) => (
