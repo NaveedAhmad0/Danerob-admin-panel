@@ -12,6 +12,25 @@ import axios from "axios";
 export default function Dataa() {
   const [data, setData] = useState([]);
 
+  const MyCell = ({ value }) => {
+    return (
+      <MDBox ml={-1}>
+        <MDBadge
+          badgeContent={value}
+          color={
+            value === "private"
+              ? "success"
+              : value === "seed"
+              ? "primary"
+              : "warning"
+          }
+          variant="gradient"
+          size="sm"
+        />
+      </MDBox>
+    );
+  };
+
   useEffect(() => {
     axios(`${API}/sale/get-all`, {
       headers: {
@@ -57,13 +76,7 @@ export default function Dataa() {
         Header: "Sale Period",
         accessor: (d) => d.saleType,
         align: "center",
-        getProps: (d) => {
-          return {
-            style: {
-              background: d.saleType === "seed" ? "red" : "green",
-            },
-          };
-        },
+        Cell: (d) => MyCell(d),
       },
       {
         Header: "Cliff Open Date",
